@@ -1,0 +1,50 @@
+info:
+  name: Create Event
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"programID\": \"{{programId}}\",\r
+
+      \  \"eventName\": \"{{eventName}}\",\r
+
+      \  \"duration\": \"PT1H\",\r
+
+      \  \"priority\": 0,\r
+
+      \  \"targets\": [\r
+
+      \    \"group-1\"\r
+
+      \  ],\r
+
+      \  \"reportDescriptors\": {{reportDescriptors}},\r
+
+      \  \"payloadDescriptors\": {{payloadDescriptors}},\r
+
+      \  \"intervalPeriod\": {{eventIntervalPeriod}},\r
+
+      \  \"intervals\": {{eventIntervals}}\r
+
+      }\r\n"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

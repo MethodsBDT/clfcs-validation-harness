@@ -1,0 +1,11 @@
+info:
+  name: "#1 LC Sets ESA Power Profile"
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit
+
+docs:
+  content: "Scenario #1 is where the LC sets the ESA power profile"
+  type: text/markdown

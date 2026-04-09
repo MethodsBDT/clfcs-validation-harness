@@ -1,0 +1,121 @@
+info:
+  name: LC Sets ESA Power Profile
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"eventName\": \"ResourcePowerProfile_2hr\",\r
+
+      \    \"programID\": \"0\", \r
+
+      \    \"intervalPeriod\": {\r
+
+      \        \"start\": \"{{eventIntervalStart}}\",\r
+
+      \        \"duration\": \"PT1H\" \r
+
+      \    },\r
+
+      \    \"payloadDescriptors\": [\r
+
+      \        {\r
+
+      \            \"objectType\": \"EVENT_PAYLOAD_DESCRIPTOR\",\r
+
+      \            \"payloadType\": \"DISPATCH_SETPOINT\", \r
+
+      \            \"units\": \"KW\"\r
+
+      \        }\r
+
+      \    ],\r
+
+      \    \"reportDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"DEMAND\", \r
+
+      \            \"readingType\": \"DIRECT_READ\", \r
+
+      \            \"units\": \"KW\",\r
+
+      \            \"startInterval\": -1,\r
+
+      \            \"numIntervals\": -1,\r
+
+      \            \"historical\": true, \r
+
+      \            \"frequency\": -1,\r
+
+      \            \"repeat\": 1\r
+
+      \        }\r
+
+      \    ],\r
+
+      \    \"intervals\": [\r
+
+      \        {\r
+
+      \            \"id\": 0, \r
+
+      \            \"payloads\": [\r
+
+      \                {\r
+
+      \                    \"type\": \"DISPATCH_SETPOINT\",\r
+
+      \                    \"values\": [10.0] \r
+
+      \                }\r
+
+      \            ]\r
+
+      \        },\r
+
+      \        {\r
+
+      \            \"id\": 1, \r
+
+      \            \"payloads\": [\r
+
+      \                {\r
+
+      \                    \"type\": \"DISPATCH_SETPOINT\",\r
+
+      \                    \"values\": [5.0] \r
+
+      \                }\r
+
+      \            ]\r
+
+      \        }\r
+
+      \    ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

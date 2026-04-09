@@ -1,0 +1,61 @@
+info:
+  name: Create
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/programs"
+  body:
+    type: json
+    data: |-
+      {
+        "programName": "{{programName}}",
+        "intervalPeriod": {
+          "start": "{{eventIntervalStart}}",
+          "duration": "PT1H",
+          "randomizeStart": "PT1H"
+        },
+        "programDescriptions": [
+          {
+            "URL": "https://www.myCorporation.com/myProgramDescription"
+          }
+        ],
+        "attributes": [
+          {
+            "type": "PRICE",
+            "values": [
+              0.17
+            ]
+          }
+        ],
+        "targets": [
+          "group-1"
+        ]
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        var programName = "program-man-001";
+        bru.setVar("programName", programName);
+
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+    - type: after-response
+      code: |-
+        // Set global variable
+        var programId = res.getBody().id;
+        bru.setVar("programId", programId);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

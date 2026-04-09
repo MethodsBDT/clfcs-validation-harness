@@ -1,0 +1,24 @@
+info:
+  name: VTN Auth (admin)
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/auth/token"
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: client_credentials
+      - name: client_id
+        value: admin
+      - name: client_secret
+        value: admin
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

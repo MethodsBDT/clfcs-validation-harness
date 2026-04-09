@@ -1,0 +1,60 @@
+info:
+  name: Create Resource
+  type: http
+  seq: 4
+  tags:
+    - setup
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/resources"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"objectType\": \"BL_RESOURCE_REQUEST\",\r
+
+      \  \"clientID\": \"{{client_id}}\",\r
+
+      \  \"resourceName\": \"{{resourceName}}\",\r
+
+      \  \"venID\": \"{{venName}}\",\r
+
+      \  \"attributes\": [\r
+
+      \    {\r
+
+      \      \"type\": \"PRICE\",\r
+
+      \      \"values\": [\r
+
+      \        0.17\r
+
+      \      ]\r
+
+      \    }\r
+
+      \  ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  variables:
+    - name: resourceName
+      value: RES-001
+    - name: venName
+      value: VEN-001
+  scripts:
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

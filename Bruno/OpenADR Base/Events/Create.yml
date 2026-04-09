@@ -1,0 +1,138 @@
+info:
+  name: Create
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"programID\": \"{{programId}}\",\r
+
+      \  \"eventName\": \"{{eventName}}\",\r
+
+      \  \"duration\": \"PT1H\",\r
+
+      \  \"priority\": 0,\r
+
+      \  \"targets\": [\r
+
+      \    \"group-1\"\r
+
+      \  ],\r
+
+      \  \"reportDescriptors\": [\r
+
+      \    {\r
+
+      \      \"payloadType\": \"{{reportPayloadType}}\",\r
+
+      \      \"readingType\": \"{{reportReadingType}}\",\r
+
+      \      \"units\": \"{{reportReadingUnits}}\",\r
+
+      \      \"targets\": [\r
+
+      \        \"group-1\"\r
+
+      \      ],\r
+
+      \      \"aggregate\": false,\r
+
+      \      \"startInterval\": -1,\r
+
+      \      \"numIntervals\": -1,\r
+
+      \      \"historical\": true,\r
+
+      \      \"frequency\": -1,\r
+
+      \      \"repeat\": 1,\r
+
+      \      \"reportIntervals\": \"INTERVALS\"\r
+
+      \    }\r
+
+      \  ],\r
+
+      \  \"payloadDescriptors\": [\r
+
+      \    {\r
+
+      \      \"objectType\": \"EVENT_PAYLOAD_DESCRIPTOR\",\r
+
+      \      \"payloadType\": \"{{eventPayloadType}}\",\r
+
+      \      \"units\": \"{{eventPayloadUnits}}\",\r
+
+      \      \"currency\": \"USD\"\r
+
+      \    }\r
+
+      \  ],\r
+
+      \  \"intervalPeriod\": {\r
+
+      \    \"start\": \"2023-06-15T09:30:00Z\",\r
+
+      \    \"duration\": \"PT1H\",\r
+
+      \    \"randomizeStart\": \"PT1H\"\r
+
+      \  },\r
+
+      \  \"intervals\": [\r
+
+      \    {\r
+
+      \      \"id\": 0,\r
+
+      \      \"intervalPeriod\": {\r
+
+      \        \"start\": \"2023-06-15T09:30:00Z\",\r
+
+      \        \"duration\": \"PT1H\",\r
+
+      \        \"randomizeStart\": \"PT1H\"\r
+
+      \      },\r
+
+      \      \"payloads\": [\r
+
+      \        {\r
+
+      \          \"type\": \"PRICE\",\r
+
+      \          \"values\": [\r
+
+      \            0.17\r
+
+      \          ]\r
+
+      \        }\r
+
+      \      ]\r
+
+      \    }\r
+
+      \  ]\r
+
+      }\r\n"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

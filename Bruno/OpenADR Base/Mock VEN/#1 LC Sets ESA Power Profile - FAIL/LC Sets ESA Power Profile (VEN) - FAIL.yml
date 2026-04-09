@@ -1,0 +1,81 @@
+info:
+  name: LC Sets ESA Power Profile (VEN) - FAIL
+  type: http
+  seq: 4
+  tags:
+    - mock-ven
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/reports"
+  body:
+    type: json
+    data: |
+      {
+        "eventID": "{{eventID}}",
+        "reportName": "ESA Power Schedule",
+        "clientName": "{{venName}}",
+        "payloadDescriptors": [
+          {
+            "objectType": "REPORT_PAYLOAD_DESCRIPTOR",
+            "payloadType": "DEMAND",
+            "readingType": "DIRECT_READ",
+            "units": "KW"
+          }
+        ],
+        "resources": [
+          {
+            "resourceName": "HVAC_Unit_3",
+            "intervalPeriod": {
+              "start": "{{reportIntervalStart}}",
+              "duration": "PT1H"
+            },
+            "intervals": [
+              {
+                "id": 0,
+                "payloads": [
+                  {
+                      "type": "DEMAND",
+                      "values": [1.8]
+                  }
+                ]
+              },
+              {
+                "id": 1,
+                "payloads": [
+                  {
+                      "type": "DEMAND",
+                      "values": [5.1]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: eventID
+      value: "0"
+    - name: venName
+      value: VEN-001
+  scripts:
+    - type: before-request
+      code: |-
+        const moment = require('moment');
+        var reportIntervalStart = moment().toJSON();
+        bru.setVar("reportIntervalStart", reportIntervalStart);
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

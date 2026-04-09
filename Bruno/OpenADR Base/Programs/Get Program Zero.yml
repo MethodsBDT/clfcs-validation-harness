@@ -1,0 +1,80 @@
+info:
+  name: Get Program Zero
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{BASE_URI}}/programs/0"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // Test 1: Verify response status is 200
+        test('Status code is 200', function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+        const jsonData = res.getBody();
+
+        // Test 2: Verify response has required properties
+        test('Response has required properties', function () {
+            expect(jsonData).to.have.property('id');
+            expect(jsonData).to.have.property('objectType');
+            expect(jsonData).to.have.property('programName');
+            expect(jsonData).to.have.property('attributes');
+            expect(jsonData).to.have.property('createdDateTime');
+            expect(jsonData).to.have.property('intervalPeriod');
+            expect(jsonData).to.have.property('programDescriptions');
+            expect(jsonData).to.have.property('targets');
+        });
+
+        // Test 3: Verify data types are correct
+        test('Data types are correct', function () {
+            expect(jsonData.id).to.be.a('string');
+            expect(jsonData.objectType).to.be.a('string');
+            expect(jsonData.programName).to.be.a('string');
+            expect(jsonData.attributes).to.be.an('array');
+            expect(jsonData.createdDateTime).to.be.a('string');
+            expect(jsonData.intervalPeriod).to.be.an('object');
+            expect(jsonData.programDescriptions).to.be.an('array');
+            expect(jsonData.targets).to.be.an('array');
+        });
+
+        // Test 4: Verify id value is '0'
+        test('ID value is 0', function () {
+            expect(jsonData.id).to.eql('0');
+        });
+
+        // Test 5: Verify objectType is 'PROGRAM'
+        test('objectType is PROGRAM', function () {
+            expect(jsonData.objectType).to.eql('PROGRAM');
+        });
+
+        // Test 6: Verify attributes array contains objects with type and values properties
+        test('Attributes array contains objects with type and values', function () {
+            expect(jsonData.attributes.length).to.be.greaterThan(0);
+            jsonData.attributes.forEach(function (attr) {
+                expect(attr).to.have.property('type');
+                expect(attr).to.have.property('values');
+                expect(attr.type).to.be.a('string');
+                expect(attr.values).to.be.an('array');
+            });
+        });
+
+        // Test 7: Verify intervalPeriod has duration, randomizeStart, and start properties
+        test('intervalPeriod has required properties', function () {
+            expect(jsonData.intervalPeriod).to.have.property('duration');
+            expect(jsonData.intervalPeriod).to.have.property('randomizeStart');
+            expect(jsonData.intervalPeriod).to.have.property('start');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

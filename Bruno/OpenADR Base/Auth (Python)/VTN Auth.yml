@@ -1,0 +1,67 @@
+info:
+  name: VTN Auth
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/auth/token"
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: client_credentials
+      - name: client_id
+        value: "{{client_id}}"
+      - name: client_secret
+        value: "{{client_secret}}"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // Set global variable
+        var accessToken = res.getBody().access_token;
+        bru.setVar("accessToken", accessToken);
+    - type: tests
+      code: |-
+        // Tests
+        test("Status code is 200", function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Response has access_token property", function () {
+            const jsonData = res.getBody();
+            expect(jsonData).to.have.property("access_token");
+            expect(jsonData.access_token).to.be.a("string");
+        });
+
+        test("access_token is not empty", function () {
+            const jsonData = res.getBody();
+            expect(jsonData.access_token).to.not.be.empty;
+        });
+
+        test("Response has token_type property and equals Bearer", function () {
+            const jsonData = res.getBody();
+            expect(jsonData).to.have.property("token_type");
+            expect(jsonData.token_type).to.equal("Bearer");
+        });
+
+        test("Response has scope property and it's an array", function () {
+            const jsonData = res.getBody();
+            expect(jsonData).to.have.property("scope");
+            expect(jsonData.scope).to.be.an("array");
+        });
+
+        // // pm.test("Scope array contains expected values", function () {
+        // //     const jsonData = pm.response.json();
+        // //     pm.expect(jsonData.scope).to.include("bl_scope");
+        // //     pm.expect(jsonData.scope).to.include("read_all");
+        // });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

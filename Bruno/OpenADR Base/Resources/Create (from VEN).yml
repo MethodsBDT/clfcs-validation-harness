@@ -1,0 +1,51 @@
+info:
+  name: Create (from VEN)
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/resources"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"objectType\": \"VEN_RESOURCE_REQUEST\",\r
+
+      \  \"resourceName\": \"{{resourceName}}\",\r
+
+      \  \"venID\": \"{{venName}}\",\r
+
+      \  \"attributes\": [\r
+
+      \    {\r
+
+      \      \"type\": \"PRICE\",\r
+
+      \      \"values\": [\r
+
+      \        0.17\r
+
+      \      ]\r
+
+      \    }\r
+
+      \  ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

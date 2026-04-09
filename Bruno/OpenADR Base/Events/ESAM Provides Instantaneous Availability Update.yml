@@ -1,0 +1,57 @@
+info:
+  name: ESAM Provides Instantaneous Availability Update
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"eventName\": \"status_report_Event\",\r
+
+      \    \"programID\": \"0\",\r
+
+      \    \"intervalPeriod\": {\r
+
+      \        \"start\": \"{{eventIntervalStart}}\",\r
+
+      \        \"duration\": \"PT0H\"\r
+
+      \    },\r
+
+      \    \"reportDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"OPERATING_STATE\", // Use the enumerated type for resource status\r
+
+      \            \"frequency\": 0, // 0 indicates the VEN may generate a report at any time ('ad hoc' report)\r
+
+      \            \"reportIntervals\": \"OPEN_INTERVALS\" // VEN determines interval structure\r
+
+      \        }\r
+
+      \    ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

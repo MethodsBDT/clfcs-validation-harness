@@ -1,0 +1,4 @@
+name: OpenADR-python (8081)
+variables:
+  - name: BASE_URI
+    value: http://localhost:8081/openadr3/3.1.0

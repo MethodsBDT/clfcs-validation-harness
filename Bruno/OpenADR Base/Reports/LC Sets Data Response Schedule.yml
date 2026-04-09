@@ -1,0 +1,108 @@
+info:
+  name: LC Sets Data Response Schedule
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/reports"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"eventID\": \"{{eventID}}\",\r
+
+      \  \"reportName\": \"ESA Schedule Report\",\r
+
+      \  \"clientName\": \"{{venName}}\",\r
+
+      \  \"payloadDescriptors\": [\r
+
+      \    {\r
+
+      \      \"objectType\": \"REPORT_PAYLOAD_DESCRIPTOR\",\r
+
+      \      \"payloadType\": \"DEMAND\",\r
+
+      \      \"readingType\": \"DIRECT_READ\",\r
+
+      \      \"units\": \"KW\"\r
+
+      \    }\r
+
+      \  ],\r
+
+      \  \"resources\": [\r
+
+      \    {\r
+
+      \      \"resourceName\": \"HVAC_Unit_3\",\r
+
+      \      \"intervalPeriod\": {\r
+
+      \        \"start\": \"{{reportIntervalStart}}\",\r
+
+      \        \"duration\": \"PT1H\"\r
+
+      \      },\r
+
+      \      \"intervals\": [\r
+
+      \        {\r
+
+      \          \"id\": 0,\r
+
+      \          \"payloads\": [\r
+
+      \            {\r
+
+      \                \"type\": \"DEMAND\",\r
+
+      \                \"values\": [9.8]\r
+
+      \            }\r
+
+      \          ]\r
+
+      \        },\r
+
+      \        {\r
+
+      \          \"id\": 1,\r
+
+      \          \"payloads\": [\r
+
+      \            {\r
+
+      \                \"type\": \"DEMAND\",\r
+
+      \                \"values\": [5.1]\r
+
+      \            }\r
+
+      \          ]\r
+
+      \        }\r
+
+      \      ]\r
+
+      \    }\r
+
+      \  ]\r
+
+      }\r\n"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const moment = require('moment');
+        var reportIntervalStart = moment().toJSON();
+        bru.setVar("reportIntervalStart", reportIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

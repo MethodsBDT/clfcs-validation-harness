@@ -1,0 +1,67 @@
+info:
+  name: LC Requests Current ESA Schedule
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"eventName\": \"Hourly_Rolling_Demand_Forecast_Request\",\r
+
+      \    \"programID\": \"0\",\r
+
+      \    \"intervalPeriod\": {\r
+
+      \        \"start\": \"{{eventIntervalStart}}\",\r
+
+      \        \"duration\": \"PT1H\"\r
+
+      \    },\r
+
+      \    \"reportDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"USAGE_FORECAST\",\r
+
+      \            \"readingType\": \"FORECAST\",\r
+
+      \            \"units\": \"KW\",\r
+
+      \            \"startInterval\": 0,\r
+
+      \            \"numIntervals\": 4,\r
+
+      \            \"historical\": false,\r
+
+      \            \"frequency\": 1,\r
+
+      \            \"repeat\": 48\r
+
+      \        }\r
+
+      \    ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

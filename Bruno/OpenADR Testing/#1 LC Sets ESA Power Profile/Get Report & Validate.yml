@@ -1,0 +1,66 @@
+info:
+  name: Get Report & Validate
+  type: http
+  seq: 4
+  tags:
+    - validate
+
+http:
+  method: GET
+  url: "{{BASE_URI}}/reports"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 200
+        test('Status code is 200', function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+        const jsonData = res.getBody();
+
+        // Test 2: Verify each response has correct client info
+        test('Response contains an array and client info', function () {
+            expect(jsonData.length).to.be.greaterThan(0);
+            jsonData.forEach(function (report) {
+                expect(report).to.have.property('clientID');
+                expect(report).to.have.property('clientName');
+                expect(report.clientID).to.be.a('string');
+                expect(report.clientID).to.eql('ven_client');
+                expect(report.clientName).to.eql('VEN-001');
+                expect(report.eventID).to.eql('0');
+                expect(report.objectType).to.eql('REPORT');
+        //         expect(report.values).to.be.an('array');
+            });
+        });
+
+        test('Report has expected values', function() {
+          jsonData.forEach(function (report) {
+            expect(report).to.have.property('resources');
+            report.resources.forEach(function (resource) {
+              expect(resource).to.have.property('intervals');
+              //  Test first interval details
+              expect(resource.intervals[0]).to.have.property('id');
+              expect(resource.intervals[0]).to.have.property('payloads');
+              expect(resource.intervals[0].payloads[0]).to.have.property('type');
+              expect(resource.intervals[0].payloads[0].type).to.eql('DEMAND');
+              expect(resource.intervals[0].payloads[0]).to.have.property('values');
+              expect(resource.intervals[0].payloads[0].values[0]).to.be.above(9.5).and.below(10.5);
+              //  Test second interval details
+              expect(resource.intervals[1]).to.have.property('id');
+              expect(resource.intervals[1]).to.have.property('payloads');
+              expect(resource.intervals[1].payloads[0]).to.have.property('type');
+              expect(resource.intervals[1].payloads[0].type).to.eql('DEMAND');
+              expect(resource.intervals[1].payloads[0]).to.have.property('values');
+              expect(resource.intervals[1].payloads[0].values[0]).to.be.above(4.5).and.below(5.5);
+            })
+          })
+        })
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

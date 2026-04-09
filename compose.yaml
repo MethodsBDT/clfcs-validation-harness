@@ -1,0 +1,38 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+name: gbcs-test-harness
+services:
+  gbcs-th:
+    image: stevekay72/gbcs-th:latest
+    hostname: gbcs-th
+    ports:
+      - 8082:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Allows access to docker daemon when using the container
+    networks:
+      - gbcs-th-network
+
+  vtn:
+    image: stevekay72/gbcs-vtn:latest
+    hostname: vtn
+    environment:
+      - BASE_URI=http://vtn:8080/openadr3/3.1.0
+      - CLEAN_START=true
+      - STORAGE_IMPLEMENTATION=IN_MEMORY
+    ports:
+      - 8081:8080
+    networks:
+      - gbcs-th-network
+
+networks:
+  gbcs-th-network:
+    name: gbcs-th-network
+    external: false
+    driver: bridge

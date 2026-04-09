@@ -1,0 +1,7 @@
+info:
+  name: "#1 LC Sets ESA Power Profile - PASS"
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

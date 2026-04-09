@@ -1,0 +1,17 @@
+info:
+  name: Reset VTN
+  type: http
+  seq: 2
+  tags:
+    - reset
+
+http:
+  method: GET
+  url: "{{BASE_URI}}/reset"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,33 @@
+info:
+  name: Authenticate (ven_client)
+  type: http
+  seq: 1
+  tags:
+    - mock-ven
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/auth/token"
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: client_credentials
+      - name: client_id
+        value: ven_client
+      - name: client_secret
+        value: "999"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        var accessToken = res.getBody().access_token;
+        bru.setVar("accessToken", accessToken);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

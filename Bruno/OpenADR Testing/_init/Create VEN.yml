@@ -1,0 +1,54 @@
+info:
+  name: Create VEN
+  type: http
+  seq: 3
+  tags:
+    - setup
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/vens"
+  body:
+    type: json
+    data: "{\r
+
+      \  \"objectType\": \"VEN_VEN_REQUEST\",\r
+
+      \  \"venName\": \"{{venName}}\",\r
+
+      \  \"attributes\": [\r
+
+      \    {\r
+
+      \      \"type\": \"PRICE\",\r
+
+      \      \"values\": [\r
+
+      \        0.17\r
+
+      \      ]\r
+
+      \    }\r
+
+      \  ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  variables:
+    - name: venName
+      value: VEN-001
+  scripts:
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

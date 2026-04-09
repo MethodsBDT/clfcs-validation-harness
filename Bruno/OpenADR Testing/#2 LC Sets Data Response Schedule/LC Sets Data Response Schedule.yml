@@ -1,0 +1,69 @@
+info:
+  name: LC Sets Data Response Schedule
+  type: http
+  seq: 2
+  tags:
+    - run
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"eventName\": \"Scheduled_Battery_Charge_State\",\r
+
+      \    \"programID\": \"0\", \r
+
+      \    \"intervalPeriod\": {\r
+
+      \        \"start\": \"{{eventIntervalStart}}\", \r
+
+      \        \"duration\": \"PT1H\" \r
+
+      \    },\r
+
+      \    \"reportDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"STORAGE_CHARGE_LEVEL\", \r
+
+      \            \"readingType\": \"DIRECT_READ\", \r
+
+      \            \"units\": \"PERCENT\", \r
+
+      \            \"startInterval\": -1, \r
+
+      \            \"numIntervals\": 1,\r
+
+      \            \"historical\": true, \r
+
+      \            \"frequency\": 1,\r
+
+      \            \"repeat\": -1 \r
+
+      \        }\r
+
+      \    ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

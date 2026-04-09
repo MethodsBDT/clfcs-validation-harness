@@ -1,0 +1,12 @@
+info:
+  name: Mock VEN
+  type: folder
+  seq: 2
+
+request:
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+  variables:
+    - name: accessToken
+      value: ""
