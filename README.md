@@ -2,7 +2,7 @@
 
 ## Overview
 
-The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Britain Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Test Node) and a test harness to test the GBCS protocol implementation of a VEN (Virtual End Node).
+The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Britain Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Test Node) and a test harness to test the GBCS protocol implementation of a VEN (Virtual End Node). 
 
 ## Prerequisites
 
