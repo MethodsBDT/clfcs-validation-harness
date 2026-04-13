@@ -41,7 +41,7 @@ The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Bri
       gbcs-th-network:
         name: gbcs-th-network
         external: false
-        driver: bridge:
+        driver: bridge
     ```
     
 2. Start the test harness:
@@ -132,7 +132,7 @@ The following assumes that you have Bruno installed and available on your path a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/MethodsBDT/gbcs-test-harness.git
+   git clone https://github.com/MethodsBDT/gbcs-test-harness
    ```
 
 2. Open Bruno and import the test collection:
