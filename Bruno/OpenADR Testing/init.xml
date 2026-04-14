@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Authenticate (bl_client)" file="_init/Authenticate (bl_client).yml" errors="0" failures="0" skipped="0" tests="6" timestamp="2026-04-14T16:12:00.239" hostname="clfcs-th" time="0.214">
+    <testcase name="Status code is 200" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+    <testcase name="Response has access_token property" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+    <testcase name="access_token is not empty" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+    <testcase name="Response has token_type property and equals Bearer" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+    <testcase name="Response has scope property and it's an array" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+    <testcase name="Scope array contains expected values" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.036"/>
+  </testsuite>
+  <testsuite name="Create VEN" file="_init/Create VEN.yml" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-04-14T16:12:00.239" hostname="clfcs-th" time="0.070">
+    <testcase name="Status code is 201" status="pass" classname="http://vtn:8080/openadr3/3.1.0/vens" time="0.070"/>
+  </testsuite>
+  <testsuite name="Create Resource" file="_init/Create Resource.yml" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-04-14T16:12:00.239" hostname="clfcs-th" time="0.052">
+    <testcase name="Status code is 201" status="pass" classname="http://vtn:8080/openadr3/3.1.0/resources" time="0.052"/>
+  </testsuite>
+  <testsuite name="Create Program Zero" file="_init/Create Program Zero.yml" errors="0" failures="0" skipped="0" tests="1" timestamp="2026-04-14T16:12:00.239" hostname="clfcs-th" time="0.140">
+    <testcase name="Status code is 201" status="pass" classname="http://vtn:8080/openadr3/3.1.0/programs" time="0.140"/>
+  </testsuite>
+</testsuites>

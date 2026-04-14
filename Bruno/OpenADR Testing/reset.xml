@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Authenticate (bl_client)" file="_init/Authenticate (bl_client).yml" errors="0" failures="0" skipped="0" tests="6" timestamp="2026-04-14T16:11:58.749" hostname="clfcs-th" time="0.194">
+    <testcase name="Status code is 200" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+    <testcase name="Response has access_token property" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+    <testcase name="access_token is not empty" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+    <testcase name="Response has token_type property and equals Bearer" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+    <testcase name="Response has scope property and it's an array" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+    <testcase name="Scope array contains expected values" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.032"/>
+  </testsuite>
+  <testsuite name="Reset VTN" file="_init/Reset VTN.yml" errors="0" failures="0" skipped="0" tests="0" timestamp="2026-04-14T16:11:58.749" hostname="clfcs-th" time="0.005"/>
+</testsuites>

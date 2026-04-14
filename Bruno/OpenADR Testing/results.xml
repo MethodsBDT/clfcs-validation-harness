@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Authenticate (bl_client)" file="#1 FlexS Sets ESA Power Profile/Authenticate (bl_client).yml" errors="0" failures="0" skipped="0" tests="6" timestamp="2026-04-14T16:12:21.011" hostname="clfcs-th" time="0.188">
+    <testcase name="Status code is 200" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+    <testcase name="Response has access_token property" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+    <testcase name="access_token is not empty" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+    <testcase name="Response has token_type property and equals Bearer" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+    <testcase name="Response has scope property and it's an array" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+    <testcase name="Scope array contains expected values" status="pass" classname="http://vtn:8080/openadr3/3.1.0/auth/token" time="0.031"/>
+  </testsuite>
+  <testsuite name="Get Report &amp; Validate" file="#1 FlexS Sets ESA Power Profile/Get Report &amp; Validate.yml" errors="0" failures="1" skipped="0" tests="3" timestamp="2026-04-14T16:12:21.011" hostname="clfcs-th" time="0.064">
+    <testcase name="Report has expected values" status="fail" classname="http://vtn:8080/openadr3/3.1.0/reports" time="0.021">
+      <failure type="failure" message="expected 1.8 to be above 9.5"/>
+    </testcase>
+    <testcase name="Status code is 200" status="pass" classname="http://vtn:8080/openadr3/3.1.0/reports" time="0.021"/>
+    <testcase name="Response contains an array and client info" status="pass" classname="http://vtn:8080/openadr3/3.1.0/reports" time="0.021"/>
+  </testsuite>
+</testsuites>

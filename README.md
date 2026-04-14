@@ -1,8 +1,8 @@
-# GBCS Test Harness Instructions
+# CLFCS Test Harness Instructions
 
 ## Overview
 
-The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Britain Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Test Node) and a test harness to test the GBCS protocol implementation of a VEN (Virtual End Node). 
+The CLFCS Test Harness is a Docker-based test environment for the CLFCS (Consumer Load Flexibility Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Top Node) and a test harness to test the CLFCS protocol implementation of a VEN (Virtual End Node). 
 
 ## Prerequisites
 
@@ -15,15 +15,15 @@ The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Bri
 
 1. Save the following to a file named `compose.yaml` on your machine
     ```yml
-    name: gbcs-test-harness
+    name: clfcs-test-harness
     services:
-      gbcs-th:
+      clfcs-th:
         image: stevekay72/gbcs-th:latest
-        hostname: gbcs-th
+        hostname: clfcs-th
         ports:
         - 8082:8080
         networks:
-        - gbcs-th-network
+        - clfcs-th-network
 
       vtn:
         image: stevekay72/gbcs-vtn:latest
@@ -35,11 +35,11 @@ The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Bri
         ports:
         - 8081:8080
         networks:
-        - gbcs-th-network
+        - clfcs-th-network
 
     networks:
-      gbcs-th-network:
-        name: gbcs-th-network
+      clfcs-th-network:
+        name: clfcs-th-network
         external: false
         driver: bridge
     ```
@@ -48,6 +48,14 @@ The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Bri
    ```bash
    docker compose up -d
    ```
+
+## Connecting the VEN to the Test Harness
+The VEN needs to be configured to connect to the reference VTN instance.  
+The VEN can be configured to connect to the reference VTN instance by setting the following configuration values within the VEN:
+
+- **BASE_URI** - The must be set to the value **http://**``<IP_ADDRESS>``**:8082/openadr3/3.1.0** where ``<IP_ADDRESS>`` is the IP address of the machine hosting the reference VTN instance.
+- **CLIENT_ID** - This **must** be set to the value ``ven_client``
+- **CLIENT_SECRET** - This **must** be set to the value ``999`` 
 
 ## Usage
 
@@ -81,8 +89,8 @@ The GBCS Test Harness is a Docker-based test environment for the GBCS (Great Bri
 The container image contains the following test collections:
 
 - _init
-- #1 LC Sets ESA Power Profile 
-- #2 LC Sets Data Response Schedule
+- #1 FlexS Sets ESA Power Profile 
+- #2 FlexS Sets Data Response Schedule
 
 The test collections are divided into two phases:
 
@@ -97,14 +105,14 @@ It performs the following actions:
 
 - Authenticates with the VTN using the **bl_client** credentials
 - Resets the VTN to a clean state
-- Creates a new **VEN** object with id **0** to represent the **ESAM**
-- Creates a new **RESOURCE** object with id **0** to represent the **ESA** that is attached to the **ESAM**
+- Creates a new **VEN** object with id **0** to represent the **FlexC**
+- Creates a new **RESOURCE** object with id **0** to represent the **ESA** that is attached to the **FlexC**
 - Creates a new **PROGRAM** object with id **0**
 
 The program that is created is referenced by the event that is created in each of the test collections to perform the required actions to test the scenario and validate the response.
 
-### #1 LC Sets ESA Power Profile Collection
-This collection is used to test the scenario where the ESAM sends an event to the ESA to set the power profile of the ESA.
+### #1 FlexS Sets ESA Power Profile Collection
+This collection is used to test the scenario where the FlexC sends an event to the ESA to set the power profile of the ESA.
 It performs the following actions in the **run** phase:
 
 - Authenticates with the VTN using the **bl_client** credentials
@@ -115,8 +123,8 @@ Once the ESA has responded, the **validate** phase is run to validate the test r
 - Authenticates with the VTN using the **bl_client** credentials
 - Validates the response from the ESA by fetching the reports and checking the values
 
-### #2 LC Sets Data Response Schedule Collection
-This collection is used to test the scenario where the ESAM sends an event to the ESA to set the data response schedule of the ESA.
+### #2 FlexS Sets Data Response Schedule Collection
+This collection is used to test the scenario where the FlexC sends an event to the ESA to set the data response schedule of the ESA.
 It performs the following actions in the **run** phase:
 
 - Authenticates with the VTN using the **bl_client** credentials
@@ -142,8 +150,8 @@ The following assumes that you have Bruno installed and available on your path a
 You will see the following test collections:
 
 - _init **(DO NOT EDIT THIS COLLECTION)**
-- #1 LC Sets ESA Power Profile 
-- #2 LC Sets Data Response Schedule
+- #1 FlexS Sets ESA Power Profile 
+- #2 FlexS Sets Data Response Schedule
 
 Add, edit and remove requests from the test collections as required.  
 >❌ **DO NOT EDIT THE _init COLLECTION**
@@ -156,7 +164,7 @@ Add, edit and remove requests from the test collections as required.
 2. Amend the `compose.yaml` file to include the path to the test collections in the `volumes` section within the `services.gbcs-th` section as follows:
     ```yaml
     services:
-      gbcs-th:
+      clfcs-th:
         image: stevekay72/gbcs-th:latest
         hostname: gbcs-th
         ports:
@@ -221,6 +229,6 @@ Here is where you can see the tags that are stored with the request.  These tags
 
 ## Bruno Response Tests
 
-Here are the tests that are executed after the request is sent to validate the response from the ESAM that has got the response from the ESA.
+Here are the tests that are executed after the request is sent to validate the response from the FlexC that has got the response from the ESA.
 
 ![Bruno Response Tests](img/bruno-response-tests.png)
