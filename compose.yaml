@@ -10,7 +10,7 @@
 name: clfcs-test-harness
 services:
   clfcs-th:
-    image: stevekay72/gbcs-th:latest
+    image: ghcr.io/methodsbdt/clfcs-th:main
     hostname: clfcs-th
     ports:
       - 8082:8080
@@ -18,7 +18,7 @@ services:
       - clfcs-th-network
 
   vtn:
-    image: stevekay72/gbcs-vtn:latest
+    image: ghcr.io/methodsbdt/clfcs-vtn:main
     hostname: vtn
     environment:
       - BASE_URI=http://vtn:8080/openadr3/3.1.0
