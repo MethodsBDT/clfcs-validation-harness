@@ -59,30 +59,30 @@ The VEN can be configured to connect to the reference VTN instance by setting th
 
 ## Usage
 
-1. Open the GBCS Test Harness in your browser:
+1. Open the CLFCS Test Harness in your browser:
    ```bash
    http://localhost:8082
    ```
 
 2. Click on the "Run Test" button to open the scenario test run page
 
-   ![GBCS Home Page](img/gbcs-home.png)
+   ![CLFCS Home Page](img/gbcs-home.png)
 
 3. Click on the "Run Test" button to start the test run
 
-    ![GBCS Test Run](img/gbcs-test-run.png)
+    ![CLFCS Test Run](img/gbcs-test-run.png)
 
 4. When the ESA has responded, click on the "Validate" button to validate the test run
 
-    ![GBCS Test Execute](img/gbcs-test-execute.png)
+    ![CLFCS Test Execute](img/gbcs-test-execute.png)
 
 5. Test completed (PASS)
 
-    ![GBCS Test Validate](img/gbcs-test-validate.png)
+    ![CLFCS Test Validate](img/gbcs-test-validate.png)
 
 6. Test completed (FAIL)
 
-    ![GBCS Test Validate](img/gbcs-test-fail.png)
+    ![CLFCS Test Validate](img/gbcs-test-fail.png)
 
 ## Test Collections
 
@@ -178,7 +178,7 @@ Add, edit and remove requests from the test collections as required.
     ```bash
     docker compose up -d
     ```
-4. Open the GBCS Test Harness in your browser:
+4. Open the CLFCS Test Harness in your browser:
     ```bash
     http://localhost:8082
     ```
@@ -187,13 +187,13 @@ You should now be able to see your test collections displayed in the test harnes
 
 ## Troubleshooting
 
-If you encounter any issues, please refer to the [GBCS Test Harness Instructions](GBCS%20Test%20Harness%20Instructions.md) for detailed troubleshooting steps.
+If you encounter any issues, please refer to the [CLFCS Test Harness Instructions](README.md) for detailed troubleshooting steps.
 
 # Bruno - a quick intro
 
-Bruno is a REST API client that is used to execute the test scripts that are used by the GBCS test harness. It is a free and open source tool that is available for download from the [Bruno website](https://www.usebruno.com/). It is a good alternative to Postman for testing APIs and does not depend on an internet connection to run.
+Bruno is a REST API client that is used to execute the test scripts that are used by the CLFCS test harness. It is a free and open source tool that is available for download from the [Bruno website](https://www.usebruno.com/). It is a good alternative to Postman for testing APIs and does not depend on an internet connection to run.
 
-Within Bruno you can edit the test scripts to change the requests that are sent by the GBCS test harness to the VTN.  You can also add new requests to the test collections.  There is also the facility to include test scripts that will interrogate the response and allow you to validate that the data returned is as expected.
+Within Bruno you can edit the test scripts to change the requests that are sent by the CLFCS test harness to the VTN.  You can also add new requests to the test collections.  There is also the facility to include test scripts that will interrogate the response and allow you to validate that the data returned is as expected.
 
 ## Bruno Collection Browser
 Here is where you can see the test collections that are available.  You can expand each collection to see the requests that are available executed as part of the test scenario.
