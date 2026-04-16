@@ -2,7 +2,7 @@
 
 ## Overview
 
-The CLFCS Test Harness is a Docker-based test environment for the CLFCS (Consumer Load Flexibility Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Top Node) and a test harness to test the CLFCS protocol implementation of a VEN (Virtual End Node). 
+The CLFCS Test Harness is a Docker-based test environment for the CLFCS (Consumer-Led Flexibility Companion Specification) which is based on the OpenADR 3.1 standard provided by DESNZ. It provides a simulated VTN (Virtual Top Node) and a test harness to test the CLFCS protocol implementation of a VEN (Virtual End Node). 
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ The CLFCS Test Harness is a Docker-based test environment for the CLFCS (Consume
     name: clfcs-test-harness
     services:
       clfcs-th:
-        image: stevekay72/gbcs-th:latest
+        image: ghcr.io/methodsbdt/clfcs-th:main
         hostname: clfcs-th
         ports:
         - 8082:8080
@@ -26,7 +26,7 @@ The CLFCS Test Harness is a Docker-based test environment for the CLFCS (Consume
         - clfcs-th-network
 
       vtn:
-        image: stevekay72/gbcs-vtn:latest
+        image: ghcr.io/methodsbdt/clfcs-vtn:main
         hostname: vtn
         environment:
         - BASE_URI=http://vtn:8080/openadr3/3.1.0
