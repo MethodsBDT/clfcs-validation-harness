@@ -206,6 +206,8 @@ You can see the `_init` collection which is used to set up the test environment 
 
 Here is where you can see the tags that are applied to each request within Bruno.  These tags are used to determine which of the requests are executed as the run part of the scenario.
 
+>‼️ Be sure tag the requests with **run** to ensure that they are executed as part of the scenario.
+
 ![Bruno Request Tags](img/bruno-request-tags.png)
 
 ## Bruno Request Body
@@ -224,6 +226,8 @@ Here is the script that is executed prior to the request being sent to set the *
 ## Bruno Response Tags
 
 Here is where you can see the tags that are stored with the request.  These tags are used to determine  which of the requests are executed as the validation of the scenario.
+
+>‼️ Be sure tag the requests with **validate** to ensure that they are executed as part of the validation of the scenario.
 
 ![Bruno Response Tags](img/bruno-response-tags.png)
 
