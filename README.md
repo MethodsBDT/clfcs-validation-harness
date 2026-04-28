@@ -140,7 +140,7 @@ The following assumes that you have Bruno installed and available on your path a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/MethodsBDT/gbcs-test-harness
+   git clone https://github.com/MethodsBDT/clfcs-validation-harness
    ```
 
 2. Open Bruno and import the test collection:
