@@ -161,12 +161,12 @@ Add, edit and remove requests from the test collections as required.
 
 1. Get the full path to the parent folder of the test collections that you want to use (e.g. C:\Development\MethodsBDT\DESNZ-WP5-Docs\Bruno\OpenADR Testing)
 
-2. Amend the `compose.yaml` file to include the path to the test collections in the `volumes` section within the `services.gbcs-th` section as follows:
+2. Amend the `compose.yaml` file to include the path to the test collections in the `volumes` section within the `services.clfcs-th` section as follows:
     ```yaml
     services:
       clfcs-th:
-        image: stevekay72/gbcs-th:latest
-        hostname: gbcs-th
+        image: ghcr.io/methodsbdt/clfcs-th:main
+        hostname: clfcs-th
         ports:
           - 8082:8080
         volumes:
