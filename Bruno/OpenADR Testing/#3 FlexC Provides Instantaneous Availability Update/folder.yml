@@ -1,0 +1,7 @@
+info:
+  name: "#3 FlexC Provides Instantaneous Availability Update"
+  type: folder
+  seq: 4
+
+request:
+  auth: inherit

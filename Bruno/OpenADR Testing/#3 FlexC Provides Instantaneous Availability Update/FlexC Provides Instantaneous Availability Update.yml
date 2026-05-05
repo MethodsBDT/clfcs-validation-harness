@@ -1,0 +1,46 @@
+info:
+  name: " FlexC Provides Instantaneous Availability Update"
+  type: http
+  seq: 2
+  tags:
+    - run
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: |-
+      {
+        "eventName": "status_report_Event",
+        "programID": "0",
+        "intervalPeriod": {
+          "start": "{{eventIntervalStart}}",
+          "duration": "PT0H" // Indicates a zero-duration event; a common pattern for report requests
+        },
+        "reportDescriptors": [
+          {
+            "payloadType": "OPERATING_STATE", // Use the enumerated type for resource status
+            "frequency": 0, // 0 indicates the VEN may generate a report at any time ('ad hoc' report)
+            "reportIntervals": "OPEN_INTERVALS" // VEN determines interval structure
+          }
+        ]
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Set global variable
+        // var programName = "program-man-001";
+        // // pm.collectionVariables.get("programId", programName);
+        const moment = require('moment');
+        var eventIntervalStart = moment().toJSON();
+        bru.setVar("eventIntervalStart", eventIntervalStart);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
