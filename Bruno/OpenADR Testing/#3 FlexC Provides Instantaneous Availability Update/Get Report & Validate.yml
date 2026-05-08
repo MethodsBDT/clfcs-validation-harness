@@ -45,9 +45,9 @@ runtime:
               expect(resource.intervals[0]).to.have.property('id');
               expect(resource.intervals[0]).to.have.property('payloads');
               expect(resource.intervals[0].payloads[0]).to.have.property('type');
-              expect(resource.intervals[0].payloads[0].type).to.eql('STORAGE_CHARGE_LEVEL');
+              expect(resource.intervals[0].payloads[0].type).to.eql('OPERATING_STATE');
               expect(resource.intervals[0].payloads[0]).to.have.property('values');
-              expect(resource.intervals[0].payloads[0].values[0]).to.be.above(0).and.below(100);
+              expect(resource.intervals[0].payloads[0].values[0]).to.be.a('string');
             })
           })
         })
