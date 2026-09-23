@@ -1,0 +1,7 @@
+info:
+  name: "#4 FlexS Dispatch Schedule - PASS"
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

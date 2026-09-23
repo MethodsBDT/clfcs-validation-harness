@@ -1,0 +1,91 @@
+info:
+  name: FlexC POST Dispatch Schedule report - PASS
+  type: http
+  seq: 4
+  tags:
+    - mock-ven
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/reports"
+  body:
+    type: json
+    data: |
+      {
+        "eventID": "{{eventID}}",
+        "reportName": "ESA Power Schedule",
+        "clientName": "{{venName}}",
+        "payloadDescriptors": [
+          {
+            "payloadType": "USAGE",
+            "units": "KWH"
+          }
+        ],
+        "resources": [
+          {
+            "resourceName": "ESA_1",
+            "intervals": [
+              {
+                "id": 0,
+                "intervalPeriod": {
+                  "start": "{{reportInterval0Start}}",
+                  "duration": "PT1H"
+                },
+                "payloads": [
+                  {
+                      "type": "USAGE",
+                      "values": [5.0]
+                  }
+                ]
+              },
+              {
+                "id": 1,
+                "intervalPeriod": {
+                  "start": "{{reportInterval1Start}}",
+                  "duration": "PT1H"
+                },
+                "payloads": [
+                  {
+                      "type": "USAGE",
+                      "values": [10.0]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: eventID
+      value: "0"
+    - name: venName
+      value: VEN-001
+    - name: reportInterval0Start
+      value: 0001-01-01
+    - name: reportInterval1Start
+      value: 0001-01-01
+  scripts:
+    - type: before-request
+      code: |-
+        const moment = require('moment');
+        var reportInterval0Start = moment().toJSON();
+        bru.setVar("reportInterval0Start", reportInterval0Start);
+        moment.add(3, 'hours');
+        var reportInterval1Start = moment().toJSON();
+        bru.setVar("reportInterval1Start", reportInterval1Start);
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

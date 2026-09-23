@@ -1,0 +1,125 @@
+info:
+  name: FlexS POST Dispatch Schedule event run
+  type: http
+  seq: 2
+  tags:
+    - run
+
+http:
+  method: POST
+  url: "{{BASE_URI}}/events"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"eventName\": \"Dispatch Schedule Ex. 1\",\r
+
+      \    \"programID\": \"0\", \r
+
+      \    \"payloadDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"DISPATCH_SETPOINT\", \r
+
+      \            \"units\": \"KW\"\r
+
+      \        }\r
+
+      \    ],\r
+
+      \    \"reportDescriptors\": [\r
+
+      \        {\r
+
+      \            \"payloadType\": \"USAGE\", \r
+
+      \            \"startInterval\": 0,\r
+
+      \            \"historical\": true, \r
+
+      \        }\r
+
+      \    ],\r
+
+      \    \"intervals\": [\r
+
+      \        {\r
+
+      \            \"id\": 0, \r
+
+      \            \"intervalPeriod\": {\r
+
+      \              \"start\": \"{{eventInterval0Start}}\",\r
+
+      \               \"duration\": \"PT1H\" \r
+
+      \            },\r
+
+      \            \"payloads\": [\r
+
+      \                {\r
+
+      \                    \"type\": \"DISPATCH_SETPOINT\",\r
+
+      \                    \"values\": [7.0] \r
+
+      \                }\r
+
+      \            ]\r
+
+      \        },\r
+
+      \        {\r
+
+      \            \"id\": 1, \r
+
+      \            \"intervalPeriod\": {\r
+
+      \              \"start\": \"{{eventInterval1Start}}\",\r
+
+      \               \"duration\": \"PT2H\" \r
+
+      \            },\r
+
+      \            \"payloads\": [\r
+
+      \                {\r
+
+      \                    \"type\": \"DISPATCH_SETPOINT\",\r
+
+      \                    \"values\": [5.0] \r
+
+      \                }\r
+
+      \            ]\r
+
+      \        }\r
+
+      \    ]\r
+
+      }"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const moment = require('moment');
+        var eventInterval0Start = moment().toJSON();
+        bru.setVar("eventInterval0Start", eventInterval0Start);
+        moment.add(3, 'hours');
+        var eventInterval1Start = moment().toJSON();
+        bru.setVar("eventInterval1Start", eventInterval1Start);
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 201 - CREATED
+        test('Status code is 201', function () {
+            expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

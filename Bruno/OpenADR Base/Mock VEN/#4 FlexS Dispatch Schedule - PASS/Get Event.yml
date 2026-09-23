@@ -1,0 +1,26 @@
+info:
+  name: Get Event
+  type: http
+  seq: 3
+  tags:
+    - mock-ven
+
+http:
+  method: GET
+  url: "{{BASE_URI}}/events/0"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        // Test 1: Verify response status is 200
+        test('Status code is 200', function () {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
