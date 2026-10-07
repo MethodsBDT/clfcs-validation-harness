@@ -157,7 +157,7 @@ Add, edit and remove requests from the test collections as required.
 >❌ **DO NOT EDIT THE _init COLLECTION**
 
 ### Using the amended scripts with the harness
->‼️ Be sure to include the **_init** collection in your test collections or the executiuon will fail
+>‼️ Be sure to include the **_init** collection in your test collections or the execution will fail
 
 1. Get the full path to the parent folder of the test collections that you want to use (e.g. C:\Development\MethodsBDT\DESNZ-WP5-Docs\Bruno\OpenADR Testing)
 
@@ -174,11 +174,33 @@ Add, edit and remove requests from the test collections as required.
         networks:
           - gbcs-th-network
     ```
-3. Execute the test harness as before:
+3. If you are running on Linux, you will need to change the user being used by the `clfcs-th` service, as this defaults to `app` (1654) and causes permissions issues. To find out which IDs are being used by your account, do the following to find the user (`-u`) and group (`-g`) IDs:
+    ```bash
+    id -u; id -g
+    ```
+    
+    Amend the `compose.yaml` file as follows:
+
+    ```yaml
+    services:
+      clfcs-th:
+        image: ghcr.io/methodsbdt/clfcs-th:main
+        hostname: clfcs-th
+        ports:
+          - 8082:8080
+        user: "<uid>:<gid>"
+        volumes:
+          - <full_path_to_test_collections>:/bruno/
+        networks:
+          - gbcs-th-network
+    ```
+    where `<uid>` is the number from `id -u` and `<gid>` is the number from `id -g` above.
+
+4. Execute the test harness as before:
     ```bash
     docker compose up -d
     ```
-4. Open the CLFCS Test Harness in your browser:
+5. Open the CLFCS Test Harness in your browser:
     ```bash
     http://localhost:8082
     ```
